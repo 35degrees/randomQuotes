@@ -1,0 +1,95 @@
+<html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Bubbler+One:300,400' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Cabin:300,400' rel='stylesheet' type='text/css'>
+<title>Random Quote Generator</title>
+<body>
+<h1>Rupert Spira Quote Generator</h1>
+<h3>When I'm stuck on a difficult coding problem or if I feel like I'm not learning as fast as I want to, Rupert's talks give me some needed big picture perspective.</h3>
+<div id='inline'><h3>You can check out his timeless advice on his <span><a href="https://www.youtube.com/watch?v=GVCeCqwAkFE&list=PLjLULqAA72YvxDwCmRiLo-AEb-bw-ZIqS">YouTube page.</a></span><h3></div>
+<div class="well">
+<blockquote>
+<h2 id="correct"></h2>
+</blockquote>
+</div>
+<style>
+body {
+background-size: cover;
+background-image: url("https://s-media-cache-ak0.pinimg.com/originals/be/2a/94/be2a940c4ac312bf5abc0aa9677749de.jpg");
+margin-left: 100px;
+margin-right: 100px;
+}
+#inline {
+display: inline;
+}
+#correct {
+display: block;
+animation: fadein 3s;
+font-family: "Courier";
+font-size: 1.5em;
+text-align: center;
+margin-top: 4%;
+font-weight: lighter;
+}
+h1,h3 {
+display: block;
+font-family: Cabin;
+font-weight: lighter;
+margin-top: 25px;
+text-align: center;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.button {
+display: block;
+border-width: 3px;
+line-height: 0.8em;
+margin: auto 0;
+text-align: center;
+font-family: Cabin;
+float: center;
+font-weight: lighter;
+}
+.button:hover {
+color: #266A2E;
+}
+.animate:active{
+animation: fadein 2s;
+}
+.well {
+height: 150px;
+position: relative;
+}
+#bird {
+display: block;
+margin: auto;
+margin-top: 12px;
+}
+
+</style>
+<a id="button" class="button"></a>
+<a href="" target="_blank" id="twitterButton" class="btn btn-primary"><img id='bird' src="https://www.iconfinder.com/data/icons/logotypes/32/twitter-128.png" width=30></a>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+$( document ).ready(function() {
+var a = document.getElementById("button");
+  $.getJSON("http://www.samhooker.com/data/rsQuotes.json", function( json ) {
+  function randomQuote() {
+  var random = Math.floor(Math.random() * json.quotes.length);
+  var quote = json.quotes[random].quote;
+  $("#correct").hide().html(quote).fadeIn('slow');
+  var quoteTwitter = quote.slice(0,137);
+  $("#twitterButton").attr("href", "https://twitter.com/intent/tweet?text=" + quoteTwitter + '...');
+    a.textContent = 'SEE NEW QUOTE';
+       a.onclick = function() {
+       	$("#correct").fadeIn(2000);
+			randomQuote();
+            return false;
+            }  
+  }
+    randomQuote();
+  })
+ });
+</script>
